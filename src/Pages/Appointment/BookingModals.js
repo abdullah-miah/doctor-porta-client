@@ -1,8 +1,11 @@
 import { format, set } from 'date-fns';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const BookingModals = ({treatment, date,SetTreatment}) => {
     const {name, slots , _id}=treatment;
+    const [user] = useAuthState(auth);
     const handlemodal =event=>{
         event.preventDefault()
         const slot = event.target.slot.value;
@@ -24,8 +27,8 @@ const BookingModals = ({treatment, date,SetTreatment}) => {
                         slots.map(slot=><option value={slot}>{slot}</option>)
                     }
                     </select>
-                <input type="text" name='name' placeholder="Name" class="input input-bordered w-full max-w-xs" />
-                <input type="email" name='email' placeholder="Email Adress" class="input input-bordered w-full max-w-xs" />
+                <input type="text" name='name' disabled value={user?.displayName} class="input input-bordered w-full max-w-xs" />
+                <input type="email" name='email' disabled value={user?.email} class="input input-bordered w-full max-w-xs" />
                 <input type="text" name='phone' placeholder="Phone Number" class="input input-bordered w-full max-w-xs" />
                 <input type="submit" value='submit' class="btn btn-secondary w-full max-w-xs" />
                 </form>

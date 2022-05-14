@@ -14,10 +14,12 @@ const Login = () => {
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
-    
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
     let signInError;
     if(user || gUser){
-        console.log(user)
+        navigate(from, { replace: true });
     }
     if ( loading || gLoading) {
         return <Loading></Loading>
