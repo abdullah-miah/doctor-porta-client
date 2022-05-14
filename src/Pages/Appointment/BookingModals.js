@@ -1,7 +1,14 @@
+import { format, set } from 'date-fns';
 import React from 'react';
 
-const BookingModals = ({treatment}) => {
-    const {name, slots}=treatment;
+const BookingModals = ({treatment, date,SetTreatment}) => {
+    const {name, slots , _id}=treatment;
+    const handlemodal =event=>{
+        event.preventDefault()
+        const slot = event.target.slot.value;
+        console.log(_id, name, slot)
+        SetTreatment(null)
+    }
     return (
         <div>
             
@@ -10,10 +17,18 @@ const BookingModals = ({treatment}) => {
             <div class="modal-box">
             <label for="booking-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                 <h3 class="font-bold text-lg text-secondary">Booking for: {name}</h3>
-                <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
-                <div class="modal-action">
-                <label for="booking-modal" class="btn">Yay!</label>
-                </div>
+                <form onSubmit={handlemodal} className='grid grid-cols-1 gap-4 justify-items-center mt-3'>
+                <input type="text" disabled  value={format(date, 'PP')}  class="input input-bordered w-full max-w-xs" />
+                <select name='slot' class="select select-bordered w-full max-w-xs">
+                    {
+                        slots.map(slot=><option value={slot}>{slot}</option>)
+                    }
+                    </select>
+                <input type="text" name='name' placeholder="Name" class="input input-bordered w-full max-w-xs" />
+                <input type="email" name='email' placeholder="Email Adress" class="input input-bordered w-full max-w-xs" />
+                <input type="text" name='phone' placeholder="Phone Number" class="input input-bordered w-full max-w-xs" />
+                <input type="submit" value='submit' class="btn btn-secondary w-full max-w-xs" />
+                </form>
             </div>
             </div>
         </div>

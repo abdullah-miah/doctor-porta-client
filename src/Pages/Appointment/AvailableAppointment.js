@@ -8,15 +8,15 @@ const AvailableAppointment = ({date}) => {
     const [services, setServices] = useState([]);
     const [treatment, SetTreatment] = useState();
     useEffect(()=>{
-        fetch('service.json')
+        fetch('http://localhost:5000/service')
         .then(res => res.json())
         .then(data => setServices(data))
     }
         ,[])
     return (
         <div>
-            <p className='text-center text-secondary text-2xl'>Available Appointment on {format(date, 'PP')}  </p>
-        <div className='grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-5'>
+            <p className='text-center text-secondary text-2xl mt-20'>Available Appointment on {format(date, 'PP')}  </p>
+        <div className='grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-5 my-20'>
             {
                 services.map(service =><Service
                 key={service._id}
@@ -28,6 +28,8 @@ const AvailableAppointment = ({date}) => {
         </div>
         {treatment && <BookingModals 
         treatment ={treatment}
+        date ={date}
+        SetTreatment={SetTreatment}
         ></BookingModals>}
         </div>
     );
